@@ -79,16 +79,32 @@ namespace ResturantsOrdering.ViewModels
             {
                 messages = value;
                 OnPropertyChanged(nameof(Messages));
-                }
+            }
+        }
+
+        private string allReceipt;
+        public string AllReceipt
+        {
+            get
+            {
+                return allReceipt;
+            }
+            set
+            {
+                allReceipt = value;
+                OnPropertyChanged(nameof(AllReceipt));
+            }
         }
         public ICommand SubmitCommand { get; }
 
+        public ICommand ConfirmCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public MakeOrderViewModel(OrdersController _ordersController,NavigationStore navigationStore, Func<DisplayMenuViewModel> CreateDisplayMenuViewModel)
+        public MakeOrderViewModel(OrdersController _ordersController,NavigationStore navigationStore, Func<DisplayMenuViewModel> CreateDisplayMenuViewModel, Func<ReceiptViewModel> CreateReciptViewModel)
         {
             SubmitCommand = new MakeOrderCommand(this,_ordersController);
             CancelCommand = new NavigateCommand(navigationStore, CreateDisplayMenuViewModel);
+            ConfirmCommand = new NavigateCommand(navigationStore, CreateReciptViewModel);
         }
     }
 }

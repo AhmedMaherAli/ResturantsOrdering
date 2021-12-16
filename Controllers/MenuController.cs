@@ -30,6 +30,15 @@ namespace ResturantsOrdering.Controllers
             Menu.menu.Add(new Item(72, 35, "Medium Mix Cheese"));
             Menu.menu.Add(new Item(92, 35, "Large Mix Cheese"));
 
+
+            Menu.menu.Add(new Item(72, 35, "Medium Chicken Burger"));
+            Menu.menu.Add(new Item(72, 35, "Medium Meat Burger"));
+
+            Menu.menu.Add(new Item(43, 35, "Spicy Buffalo Sauce"));
+            Menu.menu.Add(new Item(72, 35, "Creamy Ranch Sauce"));
+            Menu.menu.Add(new Item(43, 35, "Honey Mustard Sauce"));
+            Menu.menu.Add(new Item(72, 35, "Tangy Barbecue Sauce"));
+
             Menu.menu.Add(new Item(80, 35, "Chicken Shawarma Fatta"));
             Menu.menu.Add(new Item(80, 35, "Meat Shawarma Fatta"));
         }

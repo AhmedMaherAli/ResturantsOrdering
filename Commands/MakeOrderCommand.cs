@@ -14,24 +14,26 @@ namespace ResturantsOrdering.Commands
         private readonly OrdersController ordersController;
         private readonly MakeOrderViewModel makeOrderViewModel;
 
+
         public MakeOrderCommand(MakeOrderViewModel _makeOrderViewModel, OrdersController _ordersController)
         {
-            ordersController = _ordersController;
             makeOrderViewModel = _makeOrderViewModel;
+            ordersController = _ordersController;
         }
 
         public override void Execute(object parameter)
         {
             Order order = ordersController.CreateOrder(makeOrderViewModel);
-            string message;
+            List<string> messages=new List<string> ();
             if (order == null)
             {
-                message = "You entered invalid ID, please check your item id and try again.\n";
+                messages.Add( "You entered invalid ID, please check your item id and try again.\n");
             }
             else
             {
-                message = ordersController.MakeOrder(order);
-                makeOrderViewModel.Messages += (message);
+                messages = ordersController.MakeOrder(order);
+                makeOrderViewModel.Messages += (messages[0]);
+                makeOrderViewModel.AllReceipt = (messages[1]);
                 ordersController.ConfirmOrder(order);
             }
 

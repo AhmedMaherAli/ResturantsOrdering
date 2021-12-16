@@ -15,6 +15,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBlock 
             Text="Making Order"
@@ -52,7 +53,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Enter order items as ItemID=>Quantity like 5=>3 each item in a row." Grid.Row="0"/>
+            <TextBlock Text="Enter order items as Menu ItemID=>Desiered Quantity for ex, 5=>3 and each item in a row." Grid.Row="0"/>
             <TextBox
                 Text="{Binding OrderItems , UpdateSourceTrigger=PropertyChanged}"
                  Name="OrderItems"
@@ -62,8 +63,8 @@
                  VerticalScrollBarVisibility="Visible" Grid.Row="1" Margin="0 5 0 0"/>
         </Grid>
         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10 15 0 10">
-            <Button Content="Confirm Order" Command="{Binding SubmitCommand}"/>
-            <Button Content="Cancel Order" Command="{Binding CancelCommand}" Margin="10 0 0 0"/>
+            <Button Content="Submit Order" Command="{Binding SubmitCommand}"/>
+            <Button Content="Back to menu" Command="{Binding CancelCommand}" Margin="10 0 0 0"/>
         </StackPanel>
         <Grid Grid.Row="6" Margin="10 0 10 0">
             <Grid.RowDefinitions>
@@ -79,5 +80,8 @@
                  Height="80"
                  VerticalScrollBarVisibility="Visible" Grid.Row="1" Margin="0 10 0 0"/>
         </Grid>
+        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="10 15 0 10">
+            <Button Content="Cofirm Order" Command="{Binding ConfirmCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
