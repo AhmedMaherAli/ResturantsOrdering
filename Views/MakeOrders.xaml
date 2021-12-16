@@ -53,7 +53,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Enter order items as ItemID=>Quantity like 5=>3 each item in a row." Grid.Row="0"/>
+            <TextBlock Text="Enter order items as Menu ItemID=>Desiered Quantity for ex, 5=>3 and each item in a row." Grid.Row="0"/>
             <TextBox
                 Text="{Binding OrderItems , UpdateSourceTrigger=PropertyChanged}"
                  Name="OrderItems"
@@ -64,7 +64,7 @@
         </Grid>
         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10 15 0 10">
             <Button Content="Submit Order" Command="{Binding SubmitCommand}"/>
-            <Button Content="Cancel Order" Command="{Binding CancelCommand}" Margin="10 0 0 0"/>
+            <Button Content="Back to menu" Command="{Binding CancelCommand}" Margin="10 0 0 0"/>
         </StackPanel>
         <Grid Grid.Row="6" Margin="10 0 10 0">
             <Grid.RowDefinitions>
