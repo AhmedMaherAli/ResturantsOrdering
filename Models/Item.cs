@@ -10,7 +10,7 @@ namespace ResturantsOrdering.Models
     {
 
         static int Items = 0;
-        public int Id { get; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
         public int Price { get; set; }
@@ -22,6 +22,13 @@ namespace ResturantsOrdering.Models
             Name = name;
             Quantity = availQ;
             Price = price;
+        }
+        public Item(Item item)
+        {
+            this.Id = item.Id;
+            this.Name = item.Name;
+            this.Price = item.Price;
+
         }
 
     }

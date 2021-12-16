@@ -12,9 +12,9 @@ namespace ResturantsOrdering.Controllers
     {
         private readonly MenuController menuController;
         private readonly List<Order> orders;
-        public OrdersController()
+        public OrdersController(MenuController _menuController)
         {
-            menuController = new MenuController();
+            menuController = _menuController;
             orders = new List<Order>();
         }
         public IEnumerable<Order> GetCustomerOrders(string CustomerName)
@@ -40,9 +40,10 @@ namespace ResturantsOrdering.Controllers
                 bool canParseQuantity = int.TryParse(operands[1], out Quantity);
                 if(canParseItemID && canParseQuantity && operands.Length == 2)
                 {
-                    Item item = menuController.GetItemFromMenuById(ItemID);
-                    if (item == null)
+                    Item MenuItem = menuController.GetItemFromMenuById(ItemID);
+                    if (MenuItem == null)
                         return null;
+                    Item item = new Item(MenuItem);
                     item.Quantity = Quantity;
                     orderItems.Add(item);
                 }
@@ -60,7 +61,7 @@ namespace ResturantsOrdering.Controllers
             order.DeliveryTime = DateTime.Now;
             order.timeToken = order.DeliveryTime.Subtract(order.OrderTime);
         }
-        public string MakeOrder(Order order)
+        public List<string> MakeOrder(Order order)
         {
             StringBuilder message=new StringBuilder();
             StringBuilder orderReceipt = new StringBuilder();
@@ -82,8 +83,12 @@ namespace ResturantsOrdering.Controllers
             }
             message.Append($"Order total cost: {order.OrderTotalCost}\n");
             message.Append(orderReceipt);
-            message.Append($"Order made by {order.CachierName} at {order.OrderTime}\n");
-            return message.ToString();
+            orderReceipt.Append($"Order total cost: {order.OrderTotalCost}\n");
+            orderReceipt.Append($"Order is created by {order.CachierName} \nOn Date and Time: {order.OrderTime}\n");
+            List<string> messages = new List<string>();
+            messages.Add(message.ToString());
+            messages.Add(orderReceipt.ToString());
+            return messages;
         }
         public void ConfirmOrder(Order order)
         {
