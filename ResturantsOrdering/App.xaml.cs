@@ -8,6 +8,7 @@ using ResturantsOrdering.Models;
 using ResturantsOrdering.Controllers;
 using System.Windows;
 using ResturantsOrdering.ViewModels;
+using ResturantsOrdering.Stores;
 
 namespace ResturantsOrdering
 {
@@ -16,22 +17,33 @@ namespace ResturantsOrdering
     /// </summary>
     public partial class App : Application
     {
+        private readonly NavigationStore navigationStore;
         private readonly OrdersController ordersController;
         public App()
         {
             ordersController = new OrdersController();
+            navigationStore = new NavigationStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            navigationStore.CurrentViewModel = CreateDisplayMenuViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(ordersController)
+                DataContext = new MainViewModel(navigationStore)
             };
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+        private MakeOrderViewModel CreateMakeOrderViewModel()
+        {
+            return new MakeOrderViewModel(ordersController,navigationStore,CreateDisplayMenuViewModel);
+        }
+
+        private DisplayMenuViewModel CreateDisplayMenuViewModel()
+        {
+            return new DisplayMenuViewModel(navigationStore,CreateMakeOrderViewModel);
         }
     }
 }

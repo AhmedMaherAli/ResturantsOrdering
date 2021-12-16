@@ -3,10 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ResturantsOrdering" xmlns:views="clr-namespace:ResturantsOrdering.Views"
+        xmlns:local="clr-namespace:ResturantsOrdering" 
+        xmlns:views="clr-namespace:ResturantsOrdering.Views"
+        xmlns:vms="clr-namespace:ResturantsOrdering.ViewModels"
         mc:Ignorable="d"
         Title="Restaurant Orders" Height="550" Width="700" FontSize="14">
     <Grid>
-        <views:MakeOrders DataContext="{Binding CurrentViewModel}"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:DisplayMenuViewModel}">
+                <views:DisplayMenu />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:MakeOrderViewModel}">
+                <views:MakeOrders />
+            </DataTemplate>
+        </Grid.Resources>
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>
