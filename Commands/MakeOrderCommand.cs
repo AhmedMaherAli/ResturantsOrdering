@@ -28,13 +28,14 @@ namespace ResturantsOrdering.Commands
             if (order == null)
             {
                 messages.Add( "You entered invalid ID, please check your item id and try again.\n");
+                makeOrderViewModel.Messages += (messages[0]); 
             }
             else
             {
                 messages = ordersController.MakeOrder(order);
                 makeOrderViewModel.Messages += (messages[0]);
                 makeOrderViewModel.AllReceipt = (messages[1]);
-                ordersController.ConfirmOrder(order);
+                //ordersController.ConfirmOrder(order);
             }
 
         }

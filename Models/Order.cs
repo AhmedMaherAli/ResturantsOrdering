@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ResturantsOrdering.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +10,9 @@ namespace ResturantsOrdering.Models
 {
     public class Order
     {
-        private static int NumberOfOrders=0;
-        public int Id { get; }
+        static int AllOrders = 0;
+        
+        public int Id { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string CachierName { get; set; }
@@ -20,8 +23,16 @@ namespace ResturantsOrdering.Models
         public TimeSpan timeToken;
         public Order()
         {
-            Id = ++NumberOfOrders;
             Items = new List<Item>();
+            Id = ++AllOrders;
+        }
+        public Order(MakeOrderViewModel order)
+        {
+            this.Id =++ AllOrders;
+            this.CachierName = order.CachierName;
+            this.CustomerName = order.CustomerName;
+            this.CustomerPhoneNumber = order.CustomerPhoneNumber;
+            this.OrderTime = DateTime.Now;
         }
         
 

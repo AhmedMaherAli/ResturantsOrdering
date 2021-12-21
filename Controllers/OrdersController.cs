@@ -12,6 +12,7 @@ namespace ResturantsOrdering.Controllers
     {
         private readonly MenuController menuController;
         private readonly List<Order> orders;
+        public Order CurrentOrder;
         public OrdersController(MenuController _menuController)
         {
             menuController = _menuController;
@@ -23,37 +24,35 @@ namespace ResturantsOrdering.Controllers
         }
         public Order CreateOrder(MakeOrderViewModel orderViewModel)
         {
-            
-            Order order = new Order();
-            order.CustomerName = orderViewModel.CustomerName;
-            order.CustomerPhoneNumber = orderViewModel.CustomerPhoneNumber;
-            order.CachierName = orderViewModel.CachierName;
-            order.OrderTime = DateTime.Now;
-            List<Item> orderItems = new List<Item>();
             if (orderViewModel.OrderItems == null)
                 return null;
-            foreach ( string line in orderViewModel.OrderItems.Split("\r\n"))
+            Order order = new Order(orderViewModel);
+            List<Item> orderItems = new List<Item>();
+            foreach (string line in orderViewModel.OrderItems.Split("\r\n"))
             {
                 string[] operands = line.Split("=>");
-                int ItemID, Quantity;
-                bool canParseItemID = int.TryParse(operands[0],out ItemID);
-                bool canParseQuantity = int.TryParse(operands[1], out Quantity);
-                if(canParseItemID && canParseQuantity && operands.Length == 2)
+                if (operands.Length == 2)
                 {
-                    Item MenuItem = menuController.GetItemFromMenuById(ItemID);
-                    if (MenuItem == null)
-                        return null;
-                    Item item = new Item(MenuItem);
-                    item.Quantity = Quantity;
-                    orderItems.Add(item);
+                    int ItemID, Quantity;
+                    bool canParseItemID = int.TryParse(operands[0], out ItemID);
+                    bool canParseQuantity = int.TryParse(operands[1], out Quantity);
+                    if (canParseItemID && canParseQuantity)
+                    {
+                        Item MenuItem = menuController.GetItemFromMenuById(ItemID);
+                        if (MenuItem == null)
+                            return null;
+                        Item item = new Item(MenuItem);
+                        item.Quantity = Quantity;
+                        orderItems.Add(item);
+                    }
+                    else { return null; }
                 }
-                else
-                {
-                    return null;
-                }
-                
+                else { return null; }
+
+
             }
             order.Items = orderItems;
+            CurrentOrder = order;
             return order;
         }
         public void CalculateOrderServiceTime(Order order)
@@ -63,23 +62,29 @@ namespace ResturantsOrdering.Controllers
         }
         public List<string> MakeOrder(Order order)
         {
-            StringBuilder message=new StringBuilder();
+            StringBuilder message = new StringBuilder();
             StringBuilder orderReceipt = new StringBuilder();
             foreach (Item OrderItem in order.Items)
             {
                 Item MenuItem = menuController.GetItemFromMenuById(OrderItem.Id);
-                
-                    if (MenuItem.Quantity >= OrderItem.Quantity)
-                    {
-                        order.OrderTotalCost += (MenuItem.Price * OrderItem.Quantity);
-                        orderReceipt.Append($"{OrderItem.Quantity} {OrderItem.Name} = {OrderItem.Quantity * MenuItem.Price} \n");
-                        MenuItem.Quantity -= OrderItem.Quantity;
-                    }
-                    else
-                    {
-                        message.Append($"Sorry, there is only {MenuItem.Quantity} items left from {MenuItem.Name}.\n");
-                    }
-                
+
+                if (MenuItem.Quantity >= OrderItem.Quantity)
+                {
+                    order.OrderTotalCost += (MenuItem.Price * OrderItem.Quantity);
+                    orderReceipt.Append($"{OrderItem.Quantity} {OrderItem.Name} = {OrderItem.Quantity * MenuItem.Price} \n");
+                    MenuItem.Quantity -= OrderItem.Quantity;
+                }
+                else
+                {
+                    OrderItem.Quantity=0;
+                    message.Append($"Sorry, there is only {MenuItem.Quantity} items left from {MenuItem.Name}.\n");
+                }
+
+            }
+            foreach (Item OrderItem in order.Items)
+            {
+                Item MenuItem = menuController.GetItemFromMenuById(OrderItem.Id);
+                MenuItem.Quantity += OrderItem.Quantity;
             }
             message.Append($"Order total cost: {order.OrderTotalCost}\n");
             message.Append(orderReceipt);
@@ -88,10 +93,17 @@ namespace ResturantsOrdering.Controllers
             List<string> messages = new List<string>();
             messages.Add(message.ToString());
             messages.Add(orderReceipt.ToString());
+            CurrentOrder = order;
             return messages;
         }
+        
         public void ConfirmOrder(Order order)
         {
+            foreach (Item OrderItem in order.Items)
+            {
+                Item MenuItem = menuController.GetItemFromMenuById(OrderItem.Id);
+                MenuItem.Quantity -= OrderItem.Quantity;
+            }
             orders.Add(order);
         }
         public int GetNumberOfTotalOrders()

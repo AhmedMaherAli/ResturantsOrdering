@@ -8,7 +8,8 @@ namespace ResturantsOrdering.Models
 {
     public class Menu
     {
-        public List<Item>menu;
+        public int MenuId { get; set; }
+        public List<Item>menu { get; set; }
         public Menu()
         {
         }

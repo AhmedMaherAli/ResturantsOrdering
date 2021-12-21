@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using ResturantsOrdering.Models;
 using ResturantsOrdering.Controllers;
 using System.Windows;
@@ -29,14 +27,15 @@ namespace ResturantsOrdering
             ordersController = new OrdersController(menuController);
             navigationStore = new NavigationStore();
             makeOrderViewModel = new MakeOrderViewModel(ordersController, navigationStore, CreateDisplayMenuViewModel, CreateReciptViewModel);
-            displayMenuViewModel= new DisplayMenuViewModel(navigationStore, CreateMakeOrderViewModel,menuController);
+            displayMenuViewModel = new DisplayMenuViewModel(navigationStore, CreateMakeOrderViewModel, menuController);
             receiptViewModel = new ReceiptViewModel(makeOrderViewModel, navigationStore, CreateDisplayMenuViewModel);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
             navigationStore.CurrentViewModel = CreateDisplayMenuViewModel();
-            
+
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(navigationStore)
@@ -47,7 +46,7 @@ namespace ResturantsOrdering
         }
         private MakeOrderViewModel CreateMakeOrderViewModel()
         {
-            
+
             return makeOrderViewModel;
         }
 
@@ -57,6 +56,7 @@ namespace ResturantsOrdering
         }
         private ReceiptViewModel CreateReciptViewModel()
         {
+            ordersController.ConfirmOrder(ordersController.CurrentOrder);
             return receiptViewModel;
         }
     }
