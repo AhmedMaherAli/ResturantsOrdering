@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "C6hj02nSD7+8wXLl1RruHOdEwDisIQJJDGjmimMP4E9vxd2iHbvFLhb5HX8VfCrNGoJ5Wie1+wNScZL5genP8Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ahmed\\source\\repos\\ResturantsOrdering\\ResturantsOrdering\\ResturantsOrdering.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ahmed\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\5.0.13\\microsoft.netcore.app.runtime.win-x64.5.0.13.nupkg.sha512",
+    "C:\\Users\\ahmed\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\5.0.13\\microsoft.aspnetcore.app.runtime.win-x64.5.0.13.nupkg.sha512",
+    "C:\\Users\\ahmed\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\5.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}
