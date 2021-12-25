@@ -23,6 +23,7 @@ namespace ResturantsOrdering.Commands
 
         public override void Execute(object parameter)
         {
+            makeOrderViewModel.Messages = "";
             Order order = ordersController.CreateOrder(makeOrderViewModel);
             List<string> messages=new List<string> ();
             if (order == null)

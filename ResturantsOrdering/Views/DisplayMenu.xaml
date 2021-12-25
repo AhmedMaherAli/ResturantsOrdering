@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ResturantsOrdering.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="550">
+             d:DesignHeight="600" d:DesignWidth="550">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -13,30 +13,25 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="10 10 10 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-
             <TextBlock 
                 Text="Our Menu"
                 Grid.Column="0"
                 Style="{StaticResource Header}"
                 />
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" >
-                <Button Content="Make an order" Command="{Binding OpenOrderPageCommand}"/>
-            </StackPanel>
         </Grid>
-        <ListView Grid.Row="1" Margin="10 25 10 0"
-                  ItemsSource="{Binding Menu}">
+        <ListView Grid.Row="1"
+                  Margin="10 10 10 0"
+                  Height="442"
+                  ItemsSource="{Binding Menu}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                  ScrollViewer.CanContentScroll="False">
             
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListView.ItemContainerStyle>
-            <ListView.View>
+            <ListView.View >
                 <GridView>
                     <GridViewColumn Header="Item ID" Width="150">
                         <GridViewColumn.CellTemplate>
@@ -62,6 +57,18 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Grid Grid.Row="2" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
 
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0 0 10 0">
+                <Button Content="Make an order" Command="{Binding OpenOrderPageCommand}"/>
+                <Button Content="Add an item" Command="{Binding OpenAddItemCommand}" Margin="15 0 0 0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" >
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -28,6 +28,7 @@ namespace ResturantsOrdering
         public MakeOrderViewModel makeOrderViewModel;
         public DisplayMenuViewModel displayMenuViewModel;
         public ReceiptViewModel receiptViewModel;
+        public AddNewMenuItemViewModel addNewMenuItemViewModel;
         public App()
         {
             applicationDbContextFactory = new ApplicationDbContextFactory(CONNECTIONSTRING);
@@ -35,8 +36,11 @@ namespace ResturantsOrdering
             ordersController = new OrdersController(menuController,applicationDbContextFactory);
             navigationStore = new NavigationStore();
             makeOrderViewModel = new MakeOrderViewModel(ordersController, navigationStore, CreateDisplayMenuViewModel, CreateReciptViewModel);
-            displayMenuViewModel = new DisplayMenuViewModel(navigationStore, CreateMakeOrderViewModel, menuController);
+
+            addNewMenuItemViewModel = new AddNewMenuItemViewModel(menuController, navigationStore, CreateDisplayMenuViewModel);
+            displayMenuViewModel = new DisplayMenuViewModel(navigationStore, CreateMakeOrderViewModel, CreateAddItemViewModel, menuController);
             receiptViewModel = new ReceiptViewModel(makeOrderViewModel, navigationStore, CreateDisplayMenuViewModel);
+
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -66,12 +70,17 @@ namespace ResturantsOrdering
 
         private DisplayMenuViewModel CreateDisplayMenuViewModel()
         {
+            displayMenuViewModel = new DisplayMenuViewModel(navigationStore, CreateMakeOrderViewModel, CreateAddItemViewModel, menuController);
             return displayMenuViewModel;
         }
         private ReceiptViewModel CreateReciptViewModel()
         {
             ordersController.ConfirmOrder(ordersController.CurrentOrder);
             return receiptViewModel;
+        }
+        private AddNewMenuItemViewModel CreateAddItemViewModel()
+        {
+            return addNewMenuItemViewModel;
         }
     }
 }
@@ -101,5 +110,6 @@ OrdersController ordersController =new OrdersController();
             Console.WriteLine(length);
 
 
-        
+
+        dotnet publish -c Release --self-contained
  */

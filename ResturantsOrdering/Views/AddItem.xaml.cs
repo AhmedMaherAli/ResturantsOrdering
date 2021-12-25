@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ResturantsOrdering
+namespace ResturantsOrdering.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddItem.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddItem : UserControl
     {
-        public MainWindow()
+        public AddItem()
         {
             InitializeComponent();
         }

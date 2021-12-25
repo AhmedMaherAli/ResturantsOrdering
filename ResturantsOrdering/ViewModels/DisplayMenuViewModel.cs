@@ -17,10 +17,12 @@ namespace ResturantsOrdering.ViewModels
 
         private readonly ObservableCollection<ItemViewModel> menu;
         public IEnumerable<ItemViewModel> Menu => menu;
+        public ICommand OpenAddItemCommand { get; }
         public ICommand OpenOrderPageCommand { get; }
         public MenuController menuController;
-        public DisplayMenuViewModel(NavigationStore navigationStore, Func<MakeOrderViewModel> CreateMakeOrderViewModel, MenuController _menuController)
+        public DisplayMenuViewModel(NavigationStore navigationStore, Func<MakeOrderViewModel> CreateMakeOrderViewModel, Func<AddNewMenuItemViewModel> addNewMenuItemViewModel, MenuController _menuController)
         {
+            OpenAddItemCommand = new NavigateCommand(navigationStore, addNewMenuItemViewModel);
             OpenOrderPageCommand = new NavigateCommand(navigationStore, CreateMakeOrderViewModel);
             menuController = _menuController;
             menu = new ObservableCollection<ItemViewModel>();

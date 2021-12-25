@@ -42,13 +42,27 @@ namespace ResturantsOrdering.Controllers
         public string AddNewItem(string name, int availQuantity, int price)
         {
             string message;
+            if (name == null) 
+            {
+                message = "You have to provide item name.";
+                return message; 
+            }
             if (Menu.menu.FirstOrDefault(item => item.Name==name)!=null)
             {
-                message = "This product exists already, Call AppendItemQuantity method to increase it's quantity.";
+                message = "This product exists already, you can append it's availabel quantity.";
                 return message;
             }
-            Menu.menu.Add( new Item(price, availQuantity, name));
-            message = "Item added to menu successfully.";
+            using (ApplicationDbContext _dbContext = _applicationDbContextFactory.CreateDbContext())
+            {
+                Item NewItem = new Item(price, availQuantity, name);
+                Menu MenuFromDb = _dbContext.Menu.FirstOrDefault(m => m.MenuId == 1);
+                MenuFromDb.menu.Add(NewItem);
+                _dbContext.Menu.Update(MenuFromDb);
+                _dbContext.SaveChanges();
+                Menu.menu = _dbContext.Item.Where(u => u.MenuId == 1).ToList();
+            }
+            
+            message = "Item is added to the menu successfully.";
             return message;
         }
         public string AppendItemQuantity(string name, int addedQuantity)

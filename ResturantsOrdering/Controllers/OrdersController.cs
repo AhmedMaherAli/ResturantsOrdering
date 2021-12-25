@@ -47,8 +47,7 @@ namespace ResturantsOrdering.Controllers
                         Item MenuItem = menuController.GetItemFromMenuById(ItemID);
                         if (MenuItem == null)
                             return null;
-                        Item item = new Item(MenuItem);
-                        item.Quantity = Quantity;
+                        Item item = new Item(MenuItem.Price, Quantity, MenuItem.Name);
                         orderItems.Add(item);
                     }
                     else { return null; }
@@ -113,7 +112,7 @@ namespace ResturantsOrdering.Controllers
             {
                 foreach(Item item in order.Items)
                 {
-                    item.MenuId = 1;
+                    item.MenuId = 2;
                     _dbContext.Item.Add(item);
                 }
                 _dbContext.Orders.Add(order);
