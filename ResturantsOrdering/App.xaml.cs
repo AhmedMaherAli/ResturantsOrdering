@@ -75,6 +75,7 @@ namespace ResturantsOrdering
         }
         private ReceiptViewModel CreateReciptViewModel()
         {
+
             ordersController.ConfirmOrder(ordersController.CurrentOrder);
             return receiptViewModel;
         }

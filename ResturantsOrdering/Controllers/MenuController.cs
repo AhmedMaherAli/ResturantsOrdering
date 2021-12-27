@@ -39,6 +39,18 @@ namespace ResturantsOrdering.Controllers
         {
             return Menu.menu;
         }
+        public void RemoveMenuItem(int Id)
+        {
+            using (ApplicationDbContext _dbContext = _applicationDbContextFactory.CreateDbContext())
+            {
+                Item ItemToRemove=_dbContext.Item.Where(u => u.MenuId == 1 && u.Id == Id).FirstOrDefault();
+                if (ItemToRemove == null) return;
+                //Menu.menu.Remove(ItemToRemove);
+                _dbContext.Item.Remove(ItemToRemove);
+                _dbContext.SaveChanges();
+                Menu.menu = _dbContext.Item.Where(u => u.MenuId == 1).ToList();
+            }
+        }
         public string AddNewItem(string name, int availQuantity, int price)
         {
             string message;

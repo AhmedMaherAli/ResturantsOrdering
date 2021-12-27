@@ -11,13 +11,23 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
             <TextBlock 
                 Text="Our Menu"
                 Grid.Column="0"
                 Style="{StaticResource Header}"
                 />
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal"  >
+                <Button Content="Make an order" Command="{Binding OpenOrderPageCommand}" />
+            </StackPanel>
+
         </Grid>
         <ListView Grid.Row="1"
                   Margin="10 10 10 0"
@@ -57,18 +67,29 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Grid Grid.Row="2" Margin="10 10 10 0">
+        <Grid Grid.Row="2" Margin="10 5 10 0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox Grid.Column="0" Text="{Binding ItemIdToRemove , UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 3"/>
+            
+            
+        </Grid>
+        <Grid Grid.Row="3" Margin="10 0 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0 0 10 0">
-                <Button Content="Make an order" Command="{Binding OpenOrderPageCommand}"/>
-                <Button Content="Add an item" Command="{Binding OpenAddItemCommand}" Margin="15 0 0 0"/>
+            
+            <StackPanel Orientation="Horizontal" >
+                <Button Content="Remove Item" Command="{Binding RemoveItemCommand}"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal" >
+            <StackPanel Grid.Column="2" Orientation="Horizontal" >
+                <Button Content="Add an item" Command="{Binding OpenAddItemCommand}" />
             </StackPanel>
         </Grid>
+
     </Grid>
 </UserControl>
